@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using DaLion.Shared.Enums;
 using DaLion.Shared.Extensions.Stardew;
 using static System.FormattableString;
@@ -25,6 +26,11 @@ internal static class RevenueService
         { 0.37f, int.MaxValue },
     }.ToImmutableDictionary();
 
+    internal static float BracketScaling()
+    {
+        return (float)Math.Round(TaxesModule.Config.IncomeTaxCeiling / Brackets.Last(), 2);
+    }
+
     /// <summary>Calculates due income tax for the <paramref name="who"/>.</summary>
     /// <param name="who">The <see cref="Farmer"/>.</param>
     /// <returns>The amount of income tax due in gold.</returns>
@@ -42,6 +48,7 @@ internal static class RevenueService
         {
             bracket = Brackets[i];
             var threshold = Thresholds[bracket];
+            bracket *= BracketScaling();
             if (temp > threshold)
             {
                 dueF += threshold * bracket;
