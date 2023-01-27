@@ -242,6 +242,9 @@ internal abstract class OverhaulModule : SmartEnum<OverhaulModule>
         /// <summary>Gets the ephemeral runtime state for the <see cref="OverhaulModule.TaxesModule"/>.</summary>
         internal static Taxes.State State => ModEntry.State.Taxes;
 
+        /// <summary>Gets a value indicating whether the current player should pay taxes.</summary>
+        internal static bool PlayerShouldPayTaxes => Game1.player.useSeparateWallets || !Context.IsMultiplayer || Context.IsMainPlayer;
+
         /// <inheritdoc />
         protected override void InvalidateAssets()
         {

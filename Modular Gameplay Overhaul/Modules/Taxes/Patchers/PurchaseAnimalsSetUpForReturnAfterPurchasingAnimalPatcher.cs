@@ -5,6 +5,7 @@
 using DaLion.Shared.Extensions.Stardew;
 using DaLion.Shared.Harmony;
 using HarmonyLib;
+using StardewValley;
 using StardewValley.Menus;
 
 #endregion using directives
@@ -29,7 +30,14 @@ internal sealed class PurchaseAnimalsSetUpForReturnAfterPurchasingAnimalPatcher 
             return;
         }
 
-        Game1.player.Increment(DataFields.BusinessExpenses, ___priceOfAnimal);
+        if (TaxesModule.PlayerShouldPayTaxes)
+        {
+            Game1.player.Increment(DataFields.BusinessExpenses, ___priceOfAnimal);
+        }
+        else
+        {
+            ModEntry.Broadcaster.MessageHost(___priceOfAnimal.ToString(), "Taxes." + DataFields.BusinessExpenses);
+        }
     }
 
     #endregion harmony patches

@@ -91,7 +91,14 @@ internal sealed class ShopMenuTryToPurchaseItemPatcher : HarmonyPatcher
             }
         }
 
-        Game1.player.Increment(DataFields.BusinessExpenses, menu.itemPriceAndStock[item][0]);
+        if (TaxesModule.PlayerShouldPayTaxes)
+        {
+            Game1.player.Increment(DataFields.BusinessExpenses, menu.itemPriceAndStock[item][0]);
+        }
+        else
+        {
+            ModEntry.Broadcaster.MessageHost(menu.itemPriceAndStock[item][0].ToString(), "Taxes." + DataFields.BusinessExpenses);
+        }
     }
 
     #endregion harmony patches
