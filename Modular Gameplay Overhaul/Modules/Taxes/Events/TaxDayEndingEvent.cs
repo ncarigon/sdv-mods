@@ -29,6 +29,16 @@ internal sealed class TaxDayEndingEvent : DayEndingEvent
     {
         var player = Game1.player;
 
+        if (!TaxesModule.PlayerShouldPayTaxes)
+        {
+            // only for non-taxable farmhands; clear data just in case any outdated info is there
+            player.Write(DataFields.SeasonIncome, "0");
+            player.Write(DataFields.BusinessExpenses, "0");
+            player.Write(DataFields.DebtOutstanding, "0");
+            player.Write(DataFields.PercentDeductions, "0");
+            return;
+        }
+
         if (Game1.dayOfMonth == 0 && Game1.currentSeason == "spring" && Game1.year == 1)
         {
             player.mailForTomorrow.Add($"{Manifest.UniqueID}/TaxIntro");

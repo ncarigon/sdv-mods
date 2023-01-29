@@ -28,7 +28,14 @@ internal sealed class BluePrintConsumeResourcesPatcher : HarmonyPatcher
             return;
         }
 
-        Game1.player.Increment(DataFields.BusinessExpenses, __instance.moneyRequired);
+        if (TaxesModule.PlayerShouldPayTaxes)
+        {
+            Game1.player.Increment(DataFields.BusinessExpenses, __instance.moneyRequired);
+        }
+        else
+        {
+            ModEntry.Broadcaster.MessageHost(__instance.moneyRequired.ToString(), "Taxes." + DataFields.BusinessExpenses);
+        }
     }
 
     #endregion harmony patches
