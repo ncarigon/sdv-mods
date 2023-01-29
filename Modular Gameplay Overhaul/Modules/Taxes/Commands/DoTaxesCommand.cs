@@ -54,6 +54,7 @@ internal sealed class DoTaxesCommand : ConsoleCommand
         {
             bracket = RevenueService.Brackets[i];
             var threshold = RevenueService.Thresholds[bracket];
+            bracket *= RevenueService.BracketScaling();
             if (temp > threshold)
             {
                 dueF += threshold * bracket;

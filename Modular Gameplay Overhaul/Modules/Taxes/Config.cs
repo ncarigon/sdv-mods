@@ -1,5 +1,7 @@
 ﻿namespace DaLion.Overhaul.Modules.Taxes;
 
+using System.Linq;
+
 #region using directives
 
 using Newtonsoft.Json;
@@ -18,7 +20,7 @@ public sealed class Config : Shared.Configs.Config
 
     /// <summary>Gets the taxable percentage of shipped products at the highest tax bracket.</summary>
     [JsonProperty]
-    public float IncomeTaxCeiling { get; internal set; } = 0.37f;
+    public float IncomeTaxCeiling { get; internal set; } = RevenueService.Brackets.Last();
 
     /// <summary>Gets a value indicating whether or not any gold spent on animal purchases and supplies should be tax-deductible.</summary>
     [JsonProperty]

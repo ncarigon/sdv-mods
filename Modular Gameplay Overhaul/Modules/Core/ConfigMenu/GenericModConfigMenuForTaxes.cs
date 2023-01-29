@@ -15,7 +15,8 @@ internal sealed partial class GenericModConfigMenuCore
                 config => config.Taxes.IncomeTaxCeiling,
                 (config, value) => config.Taxes.IncomeTaxCeiling = value,
                 0f,
-                2f)
+                1f,
+                0.01f)
             .AddNumberField(
                 () => "Annual Interest",
                 () =>
